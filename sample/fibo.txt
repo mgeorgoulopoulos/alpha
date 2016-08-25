@@ -1,0 +1,12 @@
+( n -- n )
+: NOT IF 0 ELSE 1 FI ;
+
+( n -- n )
+: fibo
+	DUP NOT IF POP 1 RET FI 
+	DUP 1 - NOT IF POP 1 RET FI
+	1 - DUP 1 -	fibo ROT fibo +
+;
+
+25 DO DUP 25 ROT - fibo . CR 1 - OD
+

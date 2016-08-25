@@ -1,0 +1,37 @@
+VARIABLE W
+VARIABLE H
+VARIABLE Radius
+VARIABLE RingWidth
+VARIABLE I
+VARIABLE J
+
+128 W SET
+128 H SET
+
+W GET 3 / Radius SET
+W GET H GET * 22 / RingWidth SET
+
+"P3\n" ...
+W GET . '\t' .. H GET . '\t' .. CR
+"255\n\n" ...
+
+( I,J --- B,G,R )
+: Color	
+	DUP2 I SET J SET
+	I GET H GET 2 / - DUP *
+	J GET W GET 2 / - DUP * +
+	Radius GET DUP * - ABS RingWidth GET <
+	I GET W GET 4 / < OR
+	J GET H GET 2 / - ABS H GET 4 * 11 / < AND
+	I GET W GET 1 * 10 / > AND
+
+	IF J GET 255 * H GET / 3 * 4 / 20 80 ELSE I GET 255 * W GET / 16 / DUP DUP FI
+;
+
+H GET DO
+	W GET DO
+		Color 3 DO >R	. '\t' .. <R 1 - OD
+	1 - OD
+	CR
+1 - OD
+

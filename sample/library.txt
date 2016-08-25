@@ -1,0 +1,34 @@
+// Tmp variables
+VARIABLE _lib_tmp1
+VARIABLE _lib_tmp2
+VARIABLE _lib_tmp_sm
+
+// Stack manipulation
+: DUP _lib_tmp_sm SET _lib_tmp_sm GET _lib_tmp_sm GET ;
+: ROT >R _lib_tmp_sm SET <R _lib_tmp_sm GET ;
+: POP _lib_tmp_sm SET ;
+: ROT3 _lib_tmp1 SET _lib_tmp2 SET _lib_tmp1 GET ROT _lib_tmp2 GET ;
+: DUP2 ROT DUP _lib_tmp1 SET ROT DUP _lib_tmp1 GET ROT ;
+
+// logic functions
+: NOT IF 0 ELSE 1 FI ;
+: AND IF IF 1 ELSE 0 FI ELSE POP 0 FI ;
+: OR IF POP 1 FI ;
+
+// Comparisons
+: > ROT < ;
+: >= < NOT ;
+: <= > NOT ;
+: = DUP2 >= ROT3 <= AND ;
+
+// Math
+: ABS DUP 0 < IF -1 * FI ;
+: % DUP2 / * - ;
+
+// Printing
+: ... DO .. OD ;
+: CR "\n" ... ;	
+: . DUP NOT IF POP '0' .. RET FI 0 ROT DO DUP 10 % '0' + ROT 10 / OD ... ;
+: .* # NOT IF CR RET FI DUP >R . ", " ... .* <R ;
+
+( mandatory empty line below )
